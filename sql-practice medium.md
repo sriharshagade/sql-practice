@@ -91,11 +91,12 @@ ORDER BY first_name DESC
 ```
 14.Show the province_id(s), sum of height; where the total sum of its patient's height is greater than or equal to 7,000.
 ``` sql
-SELECT province_id, sum(height)
+SELECT
+  province_id,
+  SUM(height) AS sum_height
 FROM patients
 GROUP BY province_id
-ORDER BY SUM(height) DESC
-LIMIT 3
+HAVING sum_height >= 7000
 ```
 15.Show the difference between the largest weight and smallest weight for patients with the last name 'Maroni'
 ```sql
@@ -159,12 +160,12 @@ JOIN doctors ON doctors.doctor_id = admissions.attending_doctor_id
 ```
 23. display the number of duplicate patients based on their first_name and last_name.
 ```sql
-    SELECT patient_id, diagnosis
-    FROM admissions
-    GROUP BY patient_id, diagnosis
-    HAVING COUNT(diagnosis = diagnosis) > 1;
+SELECT first_name, last_name, count(*)
+FROM patients
+GROUP BY first_name, last_name
+having count(*) > 1;
 ```
-25.  Display patient's full name,height in the units feet ROUNDed to 1 decimal,weight in the unit pounds ROUNDed to 0 decimals,birth_date,gender non abbreviated. Convert CM to feet by dividing by 30.48. Convert KG to pounds by multiplying by 2.205.
+24.  Display patient's full name,height in the units feet ROUNDed to 1 decimal,weight in the unit pounds ROUNDed to 0 decimals,birth_date,gender non abbreviated. Convert CM to feet by dividing by 30.48. Convert KG to pounds by multiplying by 2.205.
 
 ```sql
 SELECT 
